@@ -8,6 +8,7 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
+#include"Stage.h"
 
 /// <summary>
 /// ゲームシーン
@@ -44,6 +45,10 @@ private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
+
+	Stage* stage_ = nullptr;
+
+	ViewProjection viewProjection_;
 
 	/// <summary>
 	/// ゲームシーン用
