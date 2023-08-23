@@ -46,6 +46,7 @@ void Beam::Move() {
 void Beam::Born() {
 	if (input_->TriggerKey(DIK_SPACE) && aliveFlag_ == 0) {
 		worldTransformBeam_.translation_.x = player_->GetX();
+		worldTransformBeam_.translation_.y = player_->GetY();
 		worldTransformBeam_.translation_.z = player_->GetZ();
 
 		aliveFlag_ = 1;

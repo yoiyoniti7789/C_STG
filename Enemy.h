@@ -22,6 +22,7 @@ public:
 	void Move(int gameTimer);
 	void Born();
 	float GetX() { return worldTransformEnemy_.translation_.x; }
+	float GetY() { return worldTransformEnemy_.translation_.y; }
 	float GetZ() { return worldTransformEnemy_.translation_.z; }
 	int GetFlag() { return aliveFlag_; }
 	void Hit() {aliveFlag_ = 2;}

@@ -91,9 +91,10 @@ void GamePlay::CollisionPlayerEnemy() {
 		if (enemy->GetFlag() == 1) {
 
 			float dx = abs(player_->GetX() - enemy->GetX());
+			float dy = abs(player_->GetY() - enemy->GetY());
 			float dz = abs(player_->GetZ() - enemy->GetZ());
 
-			if (dx < 1 && dz < 1) {
+			if (dx < 1 && dy < 1 && dz < 1) {
 				enemy->Hit();
 				playerLife_ -= 1;
 				playerTimer_ = 60;
@@ -112,9 +113,10 @@ void GamePlay::CollisionBeamEnemy() {
 		for (Beam* beam : beamTable_) {
 			if (enemy->GetFlag() == 1 && beam->GetFlag() == 1) {
 				float dx = abs(beam->GetX() - enemy->GetX());
+				float dy = abs(beam->GetY() - enemy->GetY());
 				float dz = abs(beam->GetZ() - enemy->GetZ());
 
-				if (dx < 1 && dz < 1) {
+				if (dx < 1 && dy < 1 && dz < 1) {
 					enemy->Hit();
 					beam->Hit();
 					enemy->JumpHit();

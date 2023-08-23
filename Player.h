@@ -36,4 +36,6 @@ private:
 	Input* input_ = nullptr;
 
 	int playerTimer_ = 60;
+
+	float jumpSpeed_ = 0;
 };
