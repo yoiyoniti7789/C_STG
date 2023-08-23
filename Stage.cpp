@@ -14,26 +14,41 @@ void Stage::Initialize(ViewProjection viewProjection) {
 	textureHandleBG_ = TextureManager::Load("bg.jpg");
 	spriteBG_ = Sprite::Create(textureHandleBG_, {0, 0});
 
-	textureHandleStage_ = TextureManager::Load("stage.jpg");
+	textureHandleStage_ = TextureManager::Load("stage2.jpg");
 	modelStage_ = Model::Create();
-	worldTransformStage_.Initialize();
+	for (int i = 0; i < 20;i++) {
+		worldTransformStageTable_[i].Initialize();
+	}
+	for (int i = 0; i < 20; i++) {
+		worldTransformStageTable_[i].translation_ = {0.0f, -1.5f, 2.0f * i - 5};
+		worldTransformStageTable_[i].scale_ = {4.5f, 1, 1};
 
-	viewProjection_.translation_.y = 1;
-	viewProjection_.translation_.z = -6;
-	viewProjection_.Initialize();
+		worldTransformStageTable_[i].matWorld_ = MakeAffineMatrix(
+		    worldTransformStageTable_[i].scale_, 
+			worldTransformStageTable_[i].rotation_,
+		    worldTransformStageTable_[i].translation_);
 
-	worldTransformStage_.translation_ = {0.0f, -1.5f, 0.0f};
-	worldTransformStage_.scale_ = {4.5f, 1.0f, 40.0f};
-
-	worldTransformStage_.matWorld_ = MakeAffineMatrix(
-	    worldTransformStage_.scale_, 
-		worldTransformStage_.rotation_,
-	    worldTransformStage_.translation_);
-
-	worldTransformStage_.TransferMatrix();
+		worldTransformStageTable_[i].TransferMatrix();
+	}
 }
 
-void Stage::Update() {}
+void Stage::Update() 
+{
+	for (int i = 0; i < 20; i++) {
+		worldTransformStageTable_[i].translation_.z -= 0.1f;
+
+		if (worldTransformStageTable_[i].translation_.z < -5) {
+			worldTransformStageTable_[i].translation_.z += 40;
+
+		}
+		worldTransformStageTable_[i].matWorld_ = MakeAffineMatrix(
+		    worldTransformStageTable_[i].scale_, 
+			worldTransformStageTable_[i].rotation_,
+		    worldTransformStageTable_[i].translation_);
+
+		worldTransformStageTable_[i].TransferMatrix();
+	}
+}
 
 void Stage::Draw2DFar() 
 { 
@@ -42,5 +57,7 @@ void Stage::Draw2DFar()
 
 void Stage::Draw3D() 
 {
-	modelStage_->Draw(worldTransformStage_, viewProjection_, textureHandleStage_);
+	for (int i = 0; i < 20; i++) {
+		modelStage_->Draw(worldTransformStageTable_[i], viewProjection_, textureHandleStage_);
+	}
 }

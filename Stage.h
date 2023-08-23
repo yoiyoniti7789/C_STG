@@ -27,6 +27,6 @@ private:
 
 	uint32_t textureHandleStage_ = 0;
 	Model* modelStage_ = nullptr;
-	WorldTransform worldTransformStage_;
+	WorldTransform worldTransformStageTable_[20];
 
 };

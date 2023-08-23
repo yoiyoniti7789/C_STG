@@ -1,14 +1,15 @@
 #include "GameScene.h"
-#include "TextureManager.h"
-#include <cassert>
 
 
 GameScene::GameScene() {}
 
 GameScene::~GameScene() 
 { 
-	delete stage_;
+	delete gameplay_;
+	delete title_;
+	delete gamaover_;
 }
+
 
 void GameScene::Initialize() {
 
@@ -16,16 +17,52 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 
+
+	viewProjection_.translation_.y = 1;
+	viewProjection_.translation_.z = -6;
 	viewProjection_.Initialize();
+	
+	gameplay_ = new GamePlay();
+	title_ = new Title();
+	gamaover_ = new GameOver();
 
-	stage_ = new Stage();
-	stage_->Initialize(viewProjection_);
+	gameplay_->Initialize(viewProjection_,player_);
+	title_->Initialize();
+	gamaover_->Initialize();
 }
 
-void GameScene::Update() 
-{ 
-	stage_->Update();
+void GameScene::Update() {
+	int oldSceneMode = sceneMode_;
+
+	switch (sceneMode_) {
+	case 0:
+		sceneMode_ = gameplay_->Update();
+		gameplay_->Shot();
+		break;
+	case 1:
+		sceneMode_ = title_->Update();
+		break;
+	case 2:
+		sceneMode_ = gamaover_->Update();
+		break;
+	}
+
+	if (oldSceneMode != sceneMode_) {
+		switch (sceneMode_) {
+		case 0:
+			gameplay_->Sound();
+			gameplay_->Start();
+			break;
+		case 1:
+			title_->Start();
+			break;
+		case 2:
+			gamaover_->Start();
+			break;
+		}
+	}
 }
+
 
 void GameScene::Draw() {
 
@@ -39,9 +76,14 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに背景スプライトの描画処理を追加できる
 	/// </summary>
-	stage_->Draw2DFar();
-
-
+	switch (sceneMode_) {
+	case 0:
+		gameplay_->Draw2DFar();
+		break;
+	case 2:
+		gameplay_->Draw2DFar();
+		break;
+	}
 	// スプライト描画後処理
 	Sprite::PostDraw();
 	// 深度バッファクリア
@@ -55,9 +97,14 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
-	stage_->Draw3D();
-
-
+	switch (sceneMode_) {
+	case 0:
+		gameplay_->Draw3D();
+		break;
+	case 2:
+		gameplay_->Draw3D();
+		break;
+	}
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion
@@ -69,7 +116,18 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
 	/// </summary>
-
+	switch (sceneMode_) {
+	case 0:
+		gameplay_->Draw2DNear();
+		break;
+	case 1:
+		title_->Draw2DNear();
+		break;
+	case 2:
+		gameplay_->Draw2DNear();
+		gamaover_->Draw2DNear();
+		break;
+	}
 	// スプライト描画後処理
 	Sprite::PostDraw();
 

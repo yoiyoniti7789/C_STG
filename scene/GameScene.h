@@ -8,7 +8,16 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
-#include"Stage.h"
+#include "Stage.h"
+#include "Player.h"
+#include "Beam.h"
+#include "Enemy.h"
+#include "DebugText.h"
+#include "GamePlay.h"
+#include "Title.h"
+#include "TextureManager.h"
+#include <cassert>
+#include "GameOver.h"
 
 /// <summary>
 /// ゲームシーン
@@ -26,6 +35,9 @@ public: // メンバ関数
 	/// </summary>
 	~GameScene();
 
+	
+
+
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -41,14 +53,22 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	
+
 private: // メンバ変数
+
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
 
-	Stage* stage_ = nullptr;
+	ViewProjection viewProjection_; 
 
-	ViewProjection viewProjection_;
+	GamePlay* gameplay_ = nullptr;
+	Title* title_ = nullptr;
+	GameOver* gamaover_ = nullptr;
+	Player* player_ = nullptr;
+
+	int sceneMode_ = 1;
 
 	/// <summary>
 	/// ゲームシーン用
