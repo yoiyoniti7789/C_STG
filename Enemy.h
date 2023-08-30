@@ -27,6 +27,12 @@ public:
 	int GetFlag() { return aliveFlag_; }
 	void Hit() {aliveFlag_ = 2;}
 	void JumpHit() { jumpSpeed_ = 1; };
+	float GetX2() { return worldTransformEnemy2_.translation_.x; }
+	float GetY2() { return worldTransformEnemy2_.translation_.y; }
+	float GetZ2() { return worldTransformEnemy2_.translation_.z; }
+	int GetFlag2() { return aliveFlag2_; }
+	void Hit2() { aliveFlag2_ = 2; }
+	void JumpHit2() { jumpSpeed2_ = 1; };
 	void Start();
 	void Jump();
 
@@ -37,11 +43,21 @@ private:
 	Model* modelEnemy_ = nullptr;
 	WorldTransform worldTransformEnemy_;
 
+	uint32_t textureHandleEnemy2_ = 0;
+	Model* modelEnemy2_ = nullptr;
+	WorldTransform worldTransformEnemy2_;
+
 	Input* input_ = nullptr;
 
 	int aliveFlag_ = 0;
 
+	int aliveFlag2_ = 0;
+
 	float xSpeed_ = 0;
 
+	float xSpeed2_ = 0;
+
 	float jumpSpeed_ = 0;
+
+	float jumpSpeed2_ = 0;
 };

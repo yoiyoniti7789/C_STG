@@ -37,13 +37,11 @@ void Player::Update()
 	}
 	if (input_->PushKey(DIK_X)) {
 		worldTransformPlayer_.translation_.y += jumpSpeed_;
-
 		jumpSpeed_ += 0.1f;
-
 		if (worldTransformPlayer_.translation_.y > 2) {
 			jumpSpeed_ = 0;
 			worldTransformPlayer_.translation_.y = 0;
-		}
+		} 
 	}
 	worldTransformPlayer_.translation_.x = max(worldTransformPlayer_.translation_.x, -4);
 	worldTransformPlayer_.translation_.x = min(worldTransformPlayer_.translation_.x, 4);

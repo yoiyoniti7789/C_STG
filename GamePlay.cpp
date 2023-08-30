@@ -93,9 +93,10 @@ void GamePlay::CollisionPlayerEnemy() {
 			float dx = abs(player_->GetX() - enemy->GetX());
 			float dy = abs(player_->GetY() - enemy->GetY());
 			float dz = abs(player_->GetZ() - enemy->GetZ());
-
+			
 			if (dx < 1 && dy < 1 && dz < 1) {
 				enemy->Hit();
+				enemy->Hit2();
 				playerLife_ -= 1;
 				playerTimer_ = 60;
 				audio_->PlayWave(soundataHandlePlayerSE_);
@@ -105,6 +106,25 @@ void GamePlay::CollisionPlayerEnemy() {
 				flag_ = 1;
 			}
 		}
+		if (enemy->GetFlag2() == 1) {
+
+			float dx2 = abs(player_->GetX() - enemy->GetX2());
+			float dy2 = abs(player_->GetY() - enemy->GetY2());
+			float dz2 = abs(player_->GetZ() - enemy->GetZ2());
+
+			if (dx2 < 1 && dy2 < 1 && dz2 < 1) {
+				
+				enemy->Hit2();
+				playerLife_ -= 1;
+				playerTimer_ = 60;
+				audio_->PlayWave(soundataHandlePlayerSE_);
+			}
+
+			if (playerLife_ <= 0) {
+				flag_ = 1;
+			}
+		}
+		
 	}
 }
 
@@ -120,6 +140,20 @@ void GamePlay::CollisionBeamEnemy() {
 					enemy->Hit();
 					beam->Hit();
 					enemy->JumpHit();
+					gameScore_ += 1;
+
+					audio_->PlayWave(soundataHandleEnemySE_);
+				}
+			}
+			if (enemy->GetFlag2() == 1 && beam->GetFlag() == 1) {
+				float dx2 = abs(beam->GetX() - enemy->GetX2());
+				float dy2 = abs(beam->GetY() - enemy->GetY2());
+				float dz2 = abs(beam->GetZ() - enemy->GetZ2());
+
+				if (dx2 < 1 && dy2 < 1 && dz2 < 1) {
+					enemy->Hit2();
+					beam->Hit();
+					enemy->JumpHit2();
 					gameScore_ += 1;
 
 					audio_->PlayWave(soundataHandleEnemySE_);
