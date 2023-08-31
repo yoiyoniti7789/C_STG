@@ -42,7 +42,7 @@ private:
 	Stage* stage_ = nullptr;
 	Player* player_ = nullptr;
 	Beam* beamTable_[10] = {};
-	Enemy* enemyTable_[10] = {};
+	Enemy* enemyTable_[6] = {};
 	DebugText* debugText_ = nullptr;
 
 	int flag_ = 0;

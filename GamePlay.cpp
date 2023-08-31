@@ -42,7 +42,7 @@ void GamePlay::Initialize(ViewProjection viewProjection, Player* player) {
 		beamTable_[i] = new Beam();
 	}
 
-	for (int i = 0; i < 10;i++) 
+	for (int i = 0; i < 6;i++) 
 	{
 		enemyTable_[i] = new Enemy();
 	}
